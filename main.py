@@ -1,5 +1,39 @@
 # -*- coding: utf-8 -*-
 import neuron as nrn
+import numpy as np
+import matplotlib.pyplot as plt
+
+def learn_me(coor, class_id):
+    synapses[0][0] = coor[0]
+    synapses[1][0] = coor[1]
+    if (class_id == 1):
+        while(True):
+            neuron.activation(synapses)
+            if (neuron.axon <= 0.001):
+                print("DONE")
+                print(neuron.axon)
+                break
+            else:
+                #print("BAD")
+                #print(neuron.axon)
+                delta = 0 - neuron.axon
+                for s in synapses:
+                    s[1] += (v * delta) * s[0]
+
+    if (class_id == 2):
+        while(True):
+            neuron.activation(synapses)
+            if (neuron.axon >= 0.999):
+                print("DONE")
+                print(neuron.axon)
+                break
+            else:
+                #print("BAD")
+                #print(neuron.axon)
+                delta = 1 - neuron.axon
+                for s in synapses:
+                    s[1] += (v * delta) * s[0]
+
 
 v = 0.5
 
@@ -16,41 +50,32 @@ synapses.append(x)
 synapses.append(y)
 
 # обучение
-while(True):
-    neuron.activation(synapses)
-    if (neuron.axon <= 0.001):
-        print("DONE")
-        print(neuron.axon)
-        break
-    else:
-        #print("BAD")
-        #print(neuron.axon)
-        delta = 0 - neuron.axon
-        for s in synapses:
-            s[1] += (v * delta) * s[0]
+learn_me([-1, -1], 2)
+plt.scatter(-1, -1)
+plt.scatter(-2, -1)
+learn_me([-2, -1], 2)
+learn_me([-2, -2], 2)
 
-while(True):
-    neuron.activation(synapses)
-    if (neuron.axon >= 0.999):
-        print("DONE")
-        print(neuron.axon)
-        break
-    else:
-        #print("BAD")
-        #print(neuron.axon)
-        delta = 1 - neuron.axon
-        for s in synapses:
-            s[1] += (v * delta) * s[0]
+learn_me([1, 1], 1)
+learn_me([2, 2], 1)
+learn_me([1, 0], 1)
+plt.scatter(1, 1)
+plt.scatter(2, 2)
 
 
+x = np.arange(-10, 10, 1)
+plt.plot(x, (-1 * synapses[0][1] * x) / synapses[1][1])
+plt.grid(True)
+plt.show()
+
 while(True):
-    a = input("ENTER X")
-    b = input("ENTER Y")
+    a = input("ENTER X ")
+    b = input("ENTER Y ")
     synapses[0][0] = a
     synapses[1][0] = b
     neuron.activation(synapses)
     print(neuron.axon)
     if(neuron.axon >= 0.99):
         print("THIS IS 2-nd CLASS")
-    if (neuron.axon <= 0.001):
+    if (neuron.axon <= 0.001 or neuron.axon == 0.5):
         print("THIS IS 1-st CLASS")
