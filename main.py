@@ -6,6 +6,7 @@ import pylab
 
 
 def learn_me(coor, class_id):
+    """Обучение нейрона"""
     synapses[0][0] = coor[0]
     synapses[1][0] = coor[1]
     if (class_id == 1):
@@ -16,8 +17,6 @@ def learn_me(coor, class_id):
                 print(neuron.axon)
                 break
             else:
-                #print("BAD")
-                #print(neuron.axon)
                 delta = 0 - neuron.axon
                 for s in synapses:
                     s[1] += (v * delta) * s[0]
@@ -30,21 +29,20 @@ def learn_me(coor, class_id):
                 print(neuron.axon)
                 break
             else:
-                #print("BAD")
-                #print(neuron.axon)
                 delta = 1 - neuron.axon
                 for s in synapses:
                     s[1] += (v * delta) * s[0]
 
 
 def draw_plot():
+    """Рисует точки на координатной плоскости"""
     for dot in dots:
         if (dot[2] == 1):
             plt.scatter(dot[0], dot[1], color="green")
         if (dot[2] == 2):
             plt.scatter(dot[0], dot[1], color="red")
     x = np.arange(-10, 10, 1)
-    plt.plot(x, (-1 * synapses[0][1] * x) / synapses[1][1])
+    plt.plot(x, (-1 * synapses[0][1] * x) / synapses[1][1])  # рисуем линию разделения 2-х классов
     plt.grid(False)
     labels = ["Classes sep. line", "Green 1-st class", "Red 2-nd class"]
     pylab.legend(labels)
@@ -67,7 +65,7 @@ synapses.append(x)
 synapses.append(y)
 
 # обучение
-learn_me([-1, -1], 2)
+learn_me([-1, -1], 2)  # передаем координату и класс
 dots.append([-1, -1, 2])
 
 learn_me([-2, -1], 2)
@@ -86,7 +84,7 @@ learn_me([1, 0], 1)
 dots.append([1, 0, 1])
 
 
-for i in range(2):
+for i in range(2):  # вводим 2 точки
     a = int(input("ENTER X "))
     b = int(input("ENTER Y "))
     synapses[0][0] = a
