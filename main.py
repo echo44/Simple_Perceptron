@@ -5,35 +5,6 @@ import matplotlib.pyplot as plt
 import pylab
 
 
-def learn_me(coor, class_id):
-    """Обучение нейрона"""
-    synapses[0][0] = coor[0]
-    synapses[1][0] = coor[1]
-    if (class_id == 1):
-        while(True):
-            neuron.activation(synapses)
-            if (neuron.axon <= 0.001):
-                print("DONE")
-                print(neuron.axon)
-                break
-            else:
-                delta = 0 - neuron.axon
-                for s in synapses:
-                    s[1] += (v * delta) * s[0]
-
-    if (class_id == 2):
-        while(True):
-            neuron.activation(synapses)
-            if (neuron.axon >= 0.999):
-                print("DONE")
-                print(neuron.axon)
-                break
-            else:
-                delta = 1 - neuron.axon
-                for s in synapses:
-                    s[1] += (v * delta) * s[0]
-
-
 def draw_plot():
     """Рисует точки на координатной плоскости"""
     for dot in dots:
@@ -65,22 +36,22 @@ synapses.append(x)
 synapses.append(y)
 
 # обучение
-learn_me([-1, -1], 2)  # передаем координату и класс
+neuron.learn_me([-1, -1], 2, synapses, v)
 dots.append([-1, -1, 2])
 
-learn_me([-2, -1], 2)
+neuron.learn_me([-2, -1], 2, synapses, v)
 dots.append([-2, -1, 2])
 
-learn_me([-2, -2], 2)
+neuron.learn_me([-2, -2], 2, synapses, v)
 dots.append([-2, -2, 2])
 
-learn_me([1, 1], 1)
+neuron.learn_me([1, 1], 1, synapses, v)
 dots.append([1, 1, 1])
 
-learn_me([2, 2], 1)
+neuron.learn_me([2, 2], 1, synapses, v)
 dots.append([2, 2, 1])
 
-learn_me([1, 0], 1)
+neuron.learn_me([1, 0], 1, synapses, v)
 dots.append([1, 0, 1])
 
 
